@@ -12,6 +12,7 @@ import api.Direction;
  * Represents a Lizard as a collection of body segments.
  */
 public class Lizard {
+	private ArrayList<BodySegment> segments;
 	/**
 	 * Constructs a Lizard object.
 	 */
@@ -26,7 +27,7 @@ public class Lizard {
 	 * @param segments list of segments ordered from tail to head
 	 */
 	public void setSegments(ArrayList<BodySegment> segments) {
-		// TODO: method stub
+		this.segments = segments;
 	}
 
 	/**
@@ -35,8 +36,7 @@ public class Lizard {
 	 * @return a list of segments ordered from tail to head
 	 */
 	public ArrayList<BodySegment> getSegments() {
-		// TODO: method stub
-		return null;
+		return segments;
 	}
 
 	/**
@@ -46,8 +46,17 @@ public class Lizard {
 	 * @return the head segment
 	 */
 	public BodySegment getHeadSegment() {
-		// TODO: method stub
-		return null;
+		try{
+			if(segments.isEmpty()){
+				return null;
+			} else {
+				BodySegment last = segments.get(segments.size() - 1);
+				return last;
+			}
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	/**
@@ -57,8 +66,17 @@ public class Lizard {
 	 * @return the tail segment
 	 */
 	public BodySegment getTailSegment() {
-		// TODO: method stub
-		return null;
+		try{
+			if(segments.isEmpty()){
+				return null;
+			} else {
+				BodySegment first = segments.get(0);
+				return first;
+			}
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	/**
@@ -69,7 +87,7 @@ public class Lizard {
 	 * @return the segment that is on the cell or null if there is none
 	 */
 	public BodySegment getSegmentAt(Cell cell) {
-		// TODO: method stub
+		//later
 		return null;
 	}
 
@@ -81,7 +99,14 @@ public class Lizard {
 	 * @return the segment in front of the given segment or null
 	 */
 	public BodySegment getSegmentAhead(BodySegment segment) {
-		// TODO: method stub
+		int index = 0;
+		for(BodySegment ele : segments){
+			if(ele == segment && index + 1 < segments.size()){
+				return segments.get(index + 1);
+			}
+			index++;
+		}
+
 		return null;
 	}
 
@@ -93,7 +118,14 @@ public class Lizard {
 	 * @return the segment behind of the given segment or null
 	 */
 	public BodySegment getSegmentBehind(BodySegment segment) {
-		// TODO: method stub
+		int index = 0;
+		for(BodySegment ele : segments){
+			if(ele == segment && index - 1 >= 0){
+				return segments.get(index - 1);
+			}
+			index++;
+		}
+
 		return null;
 	}
 
@@ -106,8 +138,17 @@ public class Lizard {
 	 * @return the direction to the segment ahead of the given segment or null
 	 */
 	public Direction getDirectionToSegmentAhead(BodySegment segment) {
-		// TODO: method stub
-		return null;
+		int index = 0;
+		for(BodySegment ele : segments){
+			if(ele == segment && index + 1 < segments.size()){
+				BodySegment nextSeg = segments.get(index + 1);
+				int nextRow = nextSeg.getCell().getRow();
+				int nextCol = nextSeg.getCell().getCol();
+				int currRow = segment.getCell().getRow();
+				int currCol = segment.getCell().getCol();
+			}
+		}
+		return null
 	}
 
 	/**
