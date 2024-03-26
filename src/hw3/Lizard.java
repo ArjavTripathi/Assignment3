@@ -159,6 +159,7 @@ public class Lizard {
 				}
 
 			}
+			index++;
 		}
 		return null;
 	}
