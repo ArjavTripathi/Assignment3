@@ -88,6 +88,11 @@ public class Lizard {
 	 */
 	public BodySegment getSegmentAt(Cell cell) {
 		//later
+		for(BodySegment ele : segments){
+			if(ele.getCell() == cell){
+				return ele;
+			}
+		}
 		return null;
 	}
 
@@ -146,9 +151,16 @@ public class Lizard {
 				int nextCol = nextSeg.getCell().getCol();
 				int currRow = segment.getCell().getRow();
 				int currCol = segment.getCell().getCol();
+
+				if (currCol == nextCol) {
+					return (nextRow > currRow) ? RIGHT : LEFT;
+				} else if (nextRow == currRow) {
+					return (currCol > nextCol) ? DOWN : UP;
+				}
+
 			}
 		}
-		return null
+		return null;
 	}
 
 	/**
