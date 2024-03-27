@@ -143,23 +143,16 @@ public class Lizard {
 	 * @return the direction to the segment ahead of the given segment or null
 	 */
 	public Direction getDirectionToSegmentAhead(BodySegment segment) {
-		int index = 0;
-		for(BodySegment ele : segments){
-			if(ele == segment && index + 1 < segments.size()){
-				BodySegment nextSeg = segments.get(index + 1);
-				int nextRow = nextSeg.getCell().getRow();
-				int nextCol = nextSeg.getCell().getCol();
-				int currRow = segment.getCell().getRow();
-				int currCol = segment.getCell().getCol();
+		BodySegment nextSeg = getSegmentAhead(segment);
+		int nextRow = nextSeg.getCell().getRow();
+		int nextCol = nextSeg.getCell().getCol();
+		int currRow = nextSeg.getCell().getRow();
+		int currCol = nextSeg.getCell().getCol();
 
-				if (currCol == nextCol) {
-					return (nextRow > currRow) ? RIGHT : LEFT;
-				} else if (nextRow == currRow) {
-					return (currCol > nextCol) ? DOWN : UP;
-				}
-
-			}
-			index++;
+		if(nextRow == currRow){
+			return nextCol > currCol ? UP : DOWN;
+		} else if (nextCol == currCol) {
+			return nextRow > currRow ? RIGHT : LEFT;
 		}
 		return null;
 	}
@@ -173,7 +166,17 @@ public class Lizard {
 	 * @return the direction to the segment behind of the given segment or null
 	 */
 	public Direction getDirectionToSegmentBehind(BodySegment segment) {
-		// TODO: method stub
+		BodySegment behindSeg = getSegmentBehind(segment);
+		int prevRow = behindSeg.getCell().getRow();
+		int prevCol = behindSeg.getCell().getCol();
+		int currRow = segment.getCell().getRow();
+		int currCol = segment.getCell().getCol();
+
+		if(prevRow == currRow){
+			return prevCol > currCol ? UP : DOWN;
+		} else if (prevCol == currCol) {
+			return prevRow > currRow ? RIGHT : LEFT;
+		}
 		return null;
 	}
 
