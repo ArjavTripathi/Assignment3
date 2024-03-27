@@ -242,8 +242,23 @@ public class Lizard {
 	 * @return the direction in which the tail segment is pointing or null
 	 */
 	public Direction getTailDirection() {
-		// TODO: method stub
-		return null;
+		if(segments.size() > 1){
+			Direction oppdir = getDirectionToSegmentAhead(getTailSegment());
+			switch (oppdir) {
+				case DOWN:
+					return UP;
+				case UP:
+					return DOWN;
+				case RIGHT:
+					return LEFT;
+				case LEFT:
+					return RIGHT;
+				default:
+					return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	@Override
