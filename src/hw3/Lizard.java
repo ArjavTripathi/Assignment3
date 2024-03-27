@@ -104,15 +104,20 @@ public class Lizard {
 	 * @return the segment in front of the given segment or null
 	 */
 	public BodySegment getSegmentAhead(BodySegment segment) {
-		int index = 0;
-		for(BodySegment ele : segments){
-			if(ele == segment && index + 1 < segments.size()){
-				return segments.get(index + 1);
+		if(isSegmentFilled()){
+			int index = 0;
+			for(BodySegment ele : segments){
+				if(ele == segment && index + 1 < segments.size()){
+					return segments.get(index + 1);
+				}
+				index++;
 			}
-			index++;
+
+			return null;
+		}else{
+			return null;
 		}
 
-		return null;
 	}
 
 	/**
@@ -172,10 +177,10 @@ public class Lizard {
 		int currRow = segment.getCell().getRow();
 		int currCol = segment.getCell().getCol();
 
-		if(prevRow == currRow){
-			return prevCol > currCol ? UP : DOWN;
-		} else if (prevCol == currCol) {
-			return prevRow > currRow ? RIGHT : LEFT;
+		if(prevCol == currCol) {
+			return prevRow > currRow ? UP : DOWN;
+		} else if(prevRow == currRow){
+			return prevCol > currCol ? RIGHT : LEFT;
 		}
 		return null;
 	}
@@ -189,8 +194,12 @@ public class Lizard {
 	 * @return the direction in which the head segment is pointing or null
 	 */
 	public Direction getHeadDirection() {
-		// TODO: method stub
-		return null;
+		if(segments.size() > 1){
+			Cell head = getHeadSegment().getCell();
+			return DOWN;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -213,5 +222,9 @@ public class Lizard {
 			result += seg + " ";
 		}
 		return result;
+	}
+
+	private boolean isSegmentFilled(){
+		return segments.size() > 1 ? true : false;
 	}
 }
