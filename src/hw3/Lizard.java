@@ -2,6 +2,7 @@ package hw3;
 
 import static api.Direction.*;
 
+import java.security.UnresolvedPermission;
 import java.util.ArrayList;
 
 import api.BodySegment;
@@ -148,18 +149,28 @@ public class Lizard {
 	 * @return the direction to the segment ahead of the given segment or null
 	 */
 	public Direction getDirectionToSegmentAhead(BodySegment segment) {
-		BodySegment nextSeg = getSegmentAhead(segment);
-		int nextRow = nextSeg.getCell().getRow();
-		int nextCol = nextSeg.getCell().getCol();
-		int currRow = nextSeg.getCell().getRow();
-		int currCol = nextSeg.getCell().getCol();
+		if(isSegmentFilled()){
+			try {
+				BodySegment nextSeg = getSegmentAhead(segment);
+				int nextRow = nextSeg.getCell().getRow();
+				int nextCol = nextSeg.getCell().getCol();
+				int currRow = segment.getCell().getRow();
+				int currCol = segment.getCell().getCol();
 
-		if(nextRow == currRow){
-			return nextCol > currCol ? UP : DOWN;
-		} else if (nextCol == currCol) {
-			return nextRow > currRow ? RIGHT : LEFT;
+				if(nextRow == currRow){
+					return nextCol > currCol ? RIGHT : LEFT;
+				} else if (nextCol == currCol) {
+					return nextRow > currRow ? DOWN : UP;
+				} else {
+					return null;
+				}
+			} catch(NullPointerException e){
+				return null;
+			}
+		} else {
+			return null;
 		}
-		return null;
+
 	}
 
 	/**
@@ -171,18 +182,27 @@ public class Lizard {
 	 * @return the direction to the segment behind of the given segment or null
 	 */
 	public Direction getDirectionToSegmentBehind(BodySegment segment) {
-		BodySegment behindSeg = getSegmentBehind(segment);
-		int prevRow = behindSeg.getCell().getRow();
-		int prevCol = behindSeg.getCell().getCol();
-		int currRow = segment.getCell().getRow();
-		int currCol = segment.getCell().getCol();
-
-		if(prevCol == currCol) {
-			return prevRow > currRow ? UP : DOWN;
-		} else if(prevRow == currRow){
-			return prevCol > currCol ? RIGHT : LEFT;
+		if(isSegmentFilled()){
+			try{
+				BodySegment behindSeg = getSegmentBehind(segment);
+				int prevRow = behindSeg.getCell().getRow();
+				int prevCol = behindSeg.getCell().getCol();
+				int currRow = segment.getCell().getRow();
+				int currCol = segment.getCell().getCol();
+				if(prevCol == currCol) {
+					return prevRow > currRow ? DOWN : UP;
+				} else if(prevRow == currRow){
+					return prevCol > currCol ? RIGHT : LEFT;
+				} else {
+					return null;
+				}
+			} catch(NullPointerException e){
+				return null;
+			}
+		} else {
+			return null;
 		}
-		return null;
+
 	}
 
 	/**
@@ -195,8 +215,19 @@ public class Lizard {
 	 */
 	public Direction getHeadDirection() {
 		if(segments.size() > 1){
-			Cell head = getHeadSegment().getCell();
-			return DOWN;
+			Direction oppdir = getDirectionToSegmentBehind(getHeadSegment());
+			switch (oppdir) {
+				case DOWN:
+					return UP;
+				case UP:
+					return DOWN;
+				case RIGHT:
+					return LEFT;
+				case LEFT:
+					return RIGHT;
+				default:
+					return null;
+			}
 		} else {
 			return null;
 		}
