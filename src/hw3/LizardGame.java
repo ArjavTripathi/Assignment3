@@ -33,11 +33,6 @@ public class LizardGame {
 		this.width = width;
 		this.height = height;
 		this.game = new Cell[height][width];
-		setGame();
-	}
-
-	private void setGame(){
-
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
 				Cell cell = new Cell(i, j);
@@ -45,6 +40,8 @@ public class LizardGame {
 			}
 		}
 	}
+
+
 
 	/**
 	 * Get the grid's width.
