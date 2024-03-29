@@ -40,9 +40,6 @@ public class LizardGame {
 			}
 		}
 	}
-
-
-
 	/**
 	 * Get the grid's width.
 	 * 
@@ -72,9 +69,9 @@ public class LizardGame {
 	 * @param wall to add
 	 */
 	public void addWall(Wall wall) {
-		int width = wall.getCell().getCol();
-		int height = wall.getCell().getRow();
-		game[height][width].placeWall(wall);
+		Cell cell = wall.getCell();
+		cell.placeWall(wall);
+		game[height-1][width-1] = cell;
 
 	}
 
@@ -90,11 +87,9 @@ public class LizardGame {
 	 */
 	public void addExit(Exit exit) {
 		exit.getCell().placeExit(exit);
-		int width = exit.getCell().getCol();
-		int height = exit.getCell().getRow();
-		Cell cell = new Cell(width, height);
+		Cell cell = exit.getCell();
 		cell.placeExit(exit);
-		game[height][width] = cell;
+		game[height-1][width-1] = cell;
 	}
 
 	/**
@@ -149,11 +144,7 @@ public class LizardGame {
 		if (col > width || row > height || col <= 0 || height <= 0) {
 			return null;
 		} else {
-			if (game[row][col].isEmpty()) {
-				return new Cell(1, 1);
-			} else {
-				return game[row][col];
-			}
+			return game[row][col];
 		}
 	}
 
