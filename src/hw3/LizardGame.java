@@ -144,7 +144,7 @@ public class LizardGame {
 		if (col > width || row > height || col <= 0 || height <= 0) {
 			return null;
 		} else {
-			return game[row][col];
+			return game[col][row];
 		}
 	}
 
