@@ -3,6 +3,7 @@ package hw3;
 
 import static api.Direction.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import api.Cell;
@@ -18,6 +19,9 @@ import api.Wall;
 public class LizardGame {
 	private ShowDialogListener dialogListener;
 	private ScoreUpdateListener scoreListener;
+	private int height;
+	private int width;
+	private Cell[][] game;
 
 	/**
 	 * Constructs a new LizardGame object with given grid dimensions.
@@ -26,7 +30,20 @@ public class LizardGame {
 	 * @param height number of rows
 	 */
 	public LizardGame(int width, int height) {
-		// TODO: method stub
+		this.width = width;
+		this.height = height;
+		this.game = new Cell[height][width];
+		setGame();
+	}
+
+	private void setGame(){
+
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				Cell cell = new Cell(i, j);
+				game[i][j] = cell;
+			}
+		}
 	}
 
 	/**
@@ -35,8 +52,7 @@ public class LizardGame {
 	 * @return width of the grid
 	 */
 	public int getWidth() {
-		// TODO: method stub
-		return 0;
+		return width;
 	}
 
 	/**
@@ -45,8 +61,7 @@ public class LizardGame {
 	 * @return height of the grid
 	 */
 	public int getHeight() {
-		// TODO: method stub
-		return 0;
+		return height;
 	}
 
 	/**
@@ -60,7 +75,10 @@ public class LizardGame {
 	 * @param wall to add
 	 */
 	public void addWall(Wall wall) {
-		// TODO: method stub
+		int width = wall.getCell().getCol();
+		int height = wall.getCell().getRow();
+		game[height][width].placeWall(wall);
+
 	}
 
 	/**
@@ -75,7 +93,11 @@ public class LizardGame {
 	 */
 	public void addExit(Exit exit) {
 		exit.getCell().placeExit(exit);
-		// TODO: method stub
+		int width = exit.getCell().getCol();
+		int height = exit.getCell().getRow();
+		Cell cell = new Cell(width, height);
+		cell.placeExit(exit);
+		game[height][width] = cell;
 	}
 
 	/**
@@ -127,7 +149,15 @@ public class LizardGame {
 	 */
 	public Cell getCell(int col, int row) {
 		// TODO: method stub
-		return null;
+		if (col > width || row > height || col <= 0 || height <= 0) {
+			return null;
+		} else {
+			if (game[row][col].isEmpty()) {
+				return new Cell(1, 1);
+			} else {
+				return game[row][col];
+			}
+		}
 	}
 
 	/**
