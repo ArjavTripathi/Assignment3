@@ -18,6 +18,10 @@ public class GameFileUtil {
 	 * @param game     the game to modify
 	 */
 	public static void load(String filePath, LizardGame game) {
-		// TODO: method stub
+//		int width = game.getWidth();
+//		int height = game.getHeight();
+//		width = width <= 0 ? 8 : width;
+//		height = height <=0 ? 4 : height;
+
 	}
 }

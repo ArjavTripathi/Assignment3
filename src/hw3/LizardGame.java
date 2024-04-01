@@ -3,15 +3,10 @@ package hw3;
 
 import static api.Direction.*;
 
-import java.lang.reflect.Array;
+import java.sql.Array;
 import java.util.ArrayList;
 
-import api.Cell;
-import api.Direction;
-import api.Exit;
-import api.ScoreUpdateListener;
-import api.ShowDialogListener;
-import api.Wall;
+import api.*;
 
 /**
  * Class that models a game.
@@ -99,8 +94,17 @@ public class LizardGame {
 	 * @return lizards list of lizards
 	 */
 	public ArrayList<Lizard> getLizards() {
-		// TODO: method stub
-		return null;
+		ArrayList<Lizard> lizards= new ArrayList<>();
+//		for(int i = 0; i < height; i++){
+//			for(int j = 0; j < width; j++){
+//				Cell cell = getCell(i, j);
+//				if(cell.getLizard() != null && !lizards.contains(cell.getLizard())){
+//					Lizard liz = cell.getLizard();
+//					lizards.add(liz);
+//				}
+//			}
+//		}
+		return lizards;
 	}
 
 	/**
@@ -111,7 +115,15 @@ public class LizardGame {
 	 * @param lizard to add
 	 */
 	public void addLizard(Lizard lizard) {
-		// TODO: method stub
+		ArrayList<BodySegment> segments = lizard.getSegments();
+		for(BodySegment segment : segments){
+			Cell cell = segment.getCell();
+			cell.placeLizard(lizard);
+			game[cell.getCol()][cell.getRow()] = cell;
+		}
+		ArrayList<Lizard> lizards = getLizards();
+		int score = lizards.size();
+		scoreListener.updateScore(score + 1);
 	}
 
 	/**
