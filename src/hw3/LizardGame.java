@@ -152,8 +152,7 @@ public class LizardGame {
 	 * @return the cell or null
 	 */
 	public Cell getCell(int col, int row) {
-		// TODO: method stub
-		if (col > width || row > height || col <= 0 || height <= 0) {
+		if (col > width || row > height || col < 0 || height < 0) {
 			return null;
 		} else {
 			return game[col][row];

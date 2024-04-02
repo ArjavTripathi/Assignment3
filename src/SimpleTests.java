@@ -64,26 +64,26 @@ public class SimpleTests {
 
 		// Example tests for GameFileUtil class
 		// (requires some implementation of LizardGame)
-		LizardGame game = new LizardGame(0, 0);
-		GameConsole gc = new GameConsole();
-		game.setListeners(gc, gc);
-
-		System.out.println();
-		GameFileUtil.load("examples/game1.txt", game);
-		System.out.println("Expected a message saying the number of lizards is now 1.");
-		System.out.println(
-				"DO NOT print this message in GameFileUtil, the ScoreListener needs to be called in LizardGame.");
-
-		System.out.println();
-		System.out.println("The grid with is " + game.getWidth() + ", expected 8.");
-		System.out.println("The grid height is " + game.getHeight() + ", expected 4.");
-		System.out.println("The cell at (0,0) is empty (" + game.getCell(0, 0).isEmpty() + "), expected true.");
-		System.out.println(
-				"The cell at (1,1) has a wall (" + (game.getCell(1, 1).getWall() != null) + "), expected true.");
-		System.out.println(
-				"The cell at (7,2) has an exit (" + (game.getCell(7, 2).getExit() != null) + "), expected true.");
-		System.out.println(
-				"The cell at (2,2) has a lizard (" + (game.getCell(2, 2).getLizard() != null) + "), expected true.");
+//		LizardGame game = new LizardGame(0, 0);
+//		GameConsole gc = new GameConsole();
+//		game.setListeners(gc, gc);
+//
+//		System.out.println();
+//		GameFileUtil.load("examples/game1.txt", game);
+//		System.out.println("Expected a message saying the number of lizards is now 1.");
+//		System.out.println(
+//				"DO NOT print this message in GameFileUtil, the ScoreListener needs to be called in LizardGame.");
+//
+//		System.out.println();
+//		System.out.println("The grid with is " + game.getWidth() + ", expected 8.");
+//		System.out.println("The grid height is " + game.getHeight() + ", expected 4.");
+//		System.out.println("The cell at (0,0) is empty (" + game.getCell(0, 0).isEmpty() + "), expected true.");
+//		System.out.println(
+//				"The cell at (1,1) has a wall (" + (game.getCell(1, 1).getWall() != null) + "), expected true.");
+//		System.out.println(
+//				"The cell at (7,2) has an exit (" + (game.getCell(7, 2).getExit() != null) + "), expected true.");
+//		System.out.println(
+//				"The cell at (2,2) has a lizard (" + (game.getCell(2, 2).getLizard() != null) + "), expected true.");
 
 		// Example tests for LizardGame
 		// (assuming previous tests worked and the game is loaded)

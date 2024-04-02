@@ -4,6 +4,10 @@ import api.BodySegment;
 import api.Cell;
 import api.Exit;
 import api.Wall;
+import ui.GameConsole;
+
+import java.io.File;
+import java.util.Scanner;
 
 /**
  * Utility class with static methods for loading game files.
@@ -18,10 +22,17 @@ public class GameFileUtil {
 	 * @param game     the game to modify
 	 */
 	public static void load(String filePath, LizardGame game) {
-//		int width = game.getWidth();
-//		int height = game.getHeight();
-//		width = width <= 0 ? 8 : width;
-//		height = height <=0 ? 4 : height;
+		File file = new File(filePath);
+		try{
+			Scanner scnr = new Scanner(file);
+			while(scnr.hasNextLine()){
+				String line = scnr.nextLine();
+				System.out.println(line);
+			}
+		} catch(Exception e){
+			System.out.println("File not found");
+		}
 
 	}
+
 }
