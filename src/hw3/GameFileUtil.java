@@ -69,6 +69,24 @@ public class GameFileUtil {
 
 				}
 			}
+
+			for(int i = height + 1; i < lines.size(); i++){
+				Lizard liz = new Lizard();
+				String[] lizard = lines.get(i).split(" ");
+				ArrayList<BodySegment> bodyseg = new ArrayList<>();
+				for(int j = 1; j < lizard.length; j++){
+					String[] coord = lizard[j].split(",");
+					Cell cell = new Cell(Integer.parseInt(coord[0]), Integer.parseInt(coord[1]));
+					BodySegment seg = new BodySegment(liz, cell);
+					bodyseg.add(seg);
+					liz.setSegments(bodyseg);
+				}
+				game.addLizard(liz);
+			}
+
+
+
+
 		}
 		catch(FileNotFoundException e){
 			System.out.println("File not found");
@@ -77,10 +95,10 @@ public class GameFileUtil {
 	}
 
 
-//	public static void main(String[] args) {
-//		LizardGame game = new LizardGame(0, 0);
-//		GameFileUtil.load("src/examples/game1.txt", game);
-//		System.out.println("width: " + game.getWidth());
-//	}
+	public static void main(String[] args) {
+		LizardGame game = new LizardGame(0, 0);
+		GameFileUtil.load("src/examples/game1.txt", game);
+		System.out.println("width: " + game.getWidth());
+	}
 
 }

@@ -18,7 +18,6 @@ public class Lizard {
 	 * Constructs a Lizard object.
 	 */
 	public Lizard() {
-		// TODO: method stub
 	}
 
 	/**
