@@ -123,7 +123,7 @@ public class LizardGame {
 		}
 		ArrayList<Lizard> lizards = getLizards();
 		int score = lizards.size();
-		scoreListener.updateScore(score + 1);
+		scoreListener.updateScore(score);
 	}
 
 	/**
@@ -138,7 +138,15 @@ public class LizardGame {
 	 * @param lizard to remove
 	 */
 	public void removeLizard(Lizard lizard) {
-		// TODO: method stub
+		ArrayList<BodySegment> segments = lizard.getSegments();
+		for(BodySegment segment : segments){
+			Cell cell = segment.getCell();
+			cell.removeLizard();
+			game[cell.getCol()][cell.getRow()] = cell;
+		}
+		ArrayList<Lizard> lizards = getLizards();
+		int score = lizards.size();
+		scoreListener.updateScore(score);
 	}
 
 	/**
@@ -209,8 +217,12 @@ public class LizardGame {
 	 * @return true if the cell is available, false otherwise
 	 */
 	public boolean isAvailable(int col, int row) {
-		// TODO: method stub
-		return false;
+		Cell cell = getCell(col, row);
+		if(cell.getWall() != null || cell.getLizard() != null){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	/**

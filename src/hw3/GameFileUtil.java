@@ -40,7 +40,6 @@ public class GameFileUtil {
 			int width = Integer.parseInt(dimensionArray[0]);
 			int height = Integer.parseInt(dimensionArray[1]);
 			game.resetGrid(width, height);
-			System.out.println("lines size: " + lines.size());
 
 			for(int i = 1; i <= height; i++){
 				char[] line = lines.get(i).toCharArray();
@@ -98,7 +97,6 @@ public class GameFileUtil {
 	public static void main(String[] args) {
 		LizardGame game = new LizardGame(0, 0);
 		GameFileUtil.load("src/examples/game1.txt", game);
-		System.out.println("width: " + game.getWidth());
 	}
 
 }
