@@ -7,6 +7,8 @@ import api.Wall;
 import ui.GameConsole;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -25,14 +27,26 @@ public class GameFileUtil {
 		File file = new File(filePath);
 		try{
 			Scanner scnr = new Scanner(file);
+			ArrayList<String> lines = new ArrayList<>();
 			while(scnr.hasNextLine()){
 				String line = scnr.nextLine();
 				System.out.println(line);
+				lines.add(line);
+
 			}
+
+			String dimensions = lines.get(0);
+			String[] dimensionArray = dimensions.split("x");
+			game.resetGrid(Integer.parseInt(dimensionArray[0]), Integer.parseInt(dimensionArray[1]));
 		} catch(Exception e){
 			System.out.println("File not found");
 		}
 
 	}
+
+//	public static void main(String[] args) {
+//		LizardGame game = new LizardGame(0, 0);
+//		GameFileUtil.load("src/examples/game1.txt", game);
+//	}
 
 }
