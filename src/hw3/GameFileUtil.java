@@ -39,11 +39,41 @@ public class GameFileUtil {
 			int width = Integer.parseInt(dimensionArray[0]);
 			int height = Integer.parseInt(dimensionArray[1]);
 			game.resetGrid(width, height);
-		} catch(Exception e){
+
+			for(int i = 1; i < lines.size(); i++){
+				char[] line = lines.get(i).toCharArray();
+				for(int j = 0; j < width; j++){
+					Cell cell = game.getCell(j,i);
+					if(line[j] == ' '){
+						if(!cell.isEmpty()){
+							cell.placeWall(null);
+							cell.placeExit(null);
+							cell.placeLizard(null);
+						}
+
+					} else if(line[j] == 'W'){
+						if(cell.getWall() == null){
+							cell.placeExit(null);
+							cell.placeLizard(null);
+							cell.placeWall(new Wall(cell));
+						}
+					} else if(line[j] == 'E'){
+						if(cell.getExit() == null){
+							cell.placeWall(null);
+							cell.placeLizard(null);
+							cell.placeExit(new Exit(cell));
+						}
+					}
+
+				}
+			}
+		}
+		catch(Exception e){
 			System.out.println("File not found");
 		}
 
 	}
+
 
 	public static void main(String[] args) {
 		LizardGame game = new LizardGame(0, 0);
