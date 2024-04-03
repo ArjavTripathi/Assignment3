@@ -27,9 +27,9 @@ public class LizardGame {
 	public LizardGame(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.game = new Cell[height][width];
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
+		this.game = new Cell[width][height];
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
 				Cell cell = new Cell(i, j);
 				game[i][j] = cell;
 			}
@@ -66,7 +66,7 @@ public class LizardGame {
 	public void addWall(Wall wall) {
 		Cell cell = wall.getCell();
 		cell.placeWall(wall);
-		game[height-1][width-1] = cell;
+		game[width-1][height-1] = cell;
 
 	}
 
@@ -84,7 +84,7 @@ public class LizardGame {
 		exit.getCell().placeExit(exit);
 		Cell cell = exit.getCell();
 		cell.placeExit(exit);
-		game[height-1][width-1] = cell;
+		game[width-1][height-1] = cell;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class LizardGame {
 		ArrayList<Lizard> lizards= new ArrayList<>();
 		for(int i = 0; i < width; i++){
 			for(int j = 0; j < height; j++){
-				Cell cell = getCell(j, i);
+				Cell cell = getCell(i, j);
 				Lizard liz = cell.getLizard();
 				if(liz != null && !lizards.contains(liz)){
 					lizards.add(liz);
@@ -190,9 +190,9 @@ public class LizardGame {
 	public void resetGrid(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.game = new Cell[height][width];
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
+		this.game = new Cell[width][height];
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
 				Cell cell = new Cell(i, j);
 				game[i][j] = cell;
 			}

@@ -36,7 +36,9 @@ public class GameFileUtil {
 
 			String dimensions = lines.get(0);
 			String[] dimensionArray = dimensions.split("x");
-			game.resetGrid(Integer.parseInt(dimensionArray[0]), Integer.parseInt(dimensionArray[1]));
+			int width = Integer.parseInt(dimensionArray[0]);
+			int height = Integer.parseInt(dimensionArray[1]);
+			game.resetGrid(width, height);
 		} catch(Exception e){
 			System.out.println("File not found");
 		}

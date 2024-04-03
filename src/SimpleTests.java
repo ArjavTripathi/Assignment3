@@ -69,7 +69,7 @@ public class SimpleTests {
 		game.setListeners(gc, gc);
 
 		System.out.println();
-		GameFileUtil.load("examples/game1.txt", game);
+		GameFileUtil.load("src/examples/game1.txt", game);
 		System.out.println("Expected a message saying the number of lizards is now 1.");
 		System.out.println(
 				"DO NOT print this message in GameFileUtil, the ScoreListener needs to be called in LizardGame.");
