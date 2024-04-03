@@ -7,6 +7,7 @@ import api.Wall;
 import ui.GameConsole;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -30,20 +31,21 @@ public class GameFileUtil {
 			ArrayList<String> lines = new ArrayList<>();
 			while(scnr.hasNextLine()){
 				String line = scnr.nextLine();
-				System.out.println(line);
+//				System.out.println(line);
 				lines.add(line);
 			}
 
-			String dimensions = lines.get(0);
+			String dimensions = lines.getFirst();
 			String[] dimensionArray = dimensions.split("x");
 			int width = Integer.parseInt(dimensionArray[0]);
 			int height = Integer.parseInt(dimensionArray[1]);
 			game.resetGrid(width, height);
+			System.out.println("lines size: " + lines.size());
 
-			for(int i = 1; i < lines.size(); i++){
+			for(int i = 1; i <= height; i++){
 				char[] line = lines.get(i).toCharArray();
 				for(int j = 0; j < width; j++){
-					Cell cell = game.getCell(j,i);
+					Cell cell = game.getCell(j, i-1);
 					if(line[j] == ' '){
 						if(!cell.isEmpty()){
 							cell.placeWall(null);
@@ -68,17 +70,17 @@ public class GameFileUtil {
 				}
 			}
 		}
-		catch(Exception e){
+		catch(FileNotFoundException e){
 			System.out.println("File not found");
 		}
 
 	}
 
 
-	public static void main(String[] args) {
-		LizardGame game = new LizardGame(0, 0);
-		GameFileUtil.load("src/examples/game1.txt", game);
-		System.out.println("width: " + game.getWidth());
-	}
+//	public static void main(String[] args) {
+//		LizardGame game = new LizardGame(0, 0);
+//		GameFileUtil.load("src/examples/game1.txt", game);
+//		System.out.println("width: " + game.getWidth());
+//	}
 
 }
