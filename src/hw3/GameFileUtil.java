@@ -32,7 +32,6 @@ public class GameFileUtil {
 				String line = scnr.nextLine();
 				System.out.println(line);
 				lines.add(line);
-
 			}
 
 			String dimensions = lines.get(0);
@@ -44,9 +43,10 @@ public class GameFileUtil {
 
 	}
 
-//	public static void main(String[] args) {
-//		LizardGame game = new LizardGame(0, 0);
-//		GameFileUtil.load("src/examples/game1.txt", game);
-//	}
+	public static void main(String[] args) {
+		LizardGame game = new LizardGame(0, 0);
+		GameFileUtil.load("src/examples/game1.txt", game);
+		System.out.println(game.getWidth());
+	}
 
 }

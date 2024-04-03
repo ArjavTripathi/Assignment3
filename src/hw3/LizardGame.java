@@ -95,15 +95,15 @@ public class LizardGame {
 	 */
 	public ArrayList<Lizard> getLizards() {
 		ArrayList<Lizard> lizards= new ArrayList<>();
-//		for(int i = 0; i < height; i++){
-//			for(int j = 0; j < width; j++){
-//				Cell cell = getCell(i, j);
-//				if(cell.getLizard() != null && !lizards.contains(cell.getLizard())){
-//					Lizard liz = cell.getLizard();
-//					lizards.add(liz);
-//				}
-//			}
-//		}
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				Cell cell = getCell(j, i);
+				Lizard liz = cell.getLizard();
+				if(liz != null && !lizards.contains(liz)){
+					lizards.add(liz);
+				}
+			}
+		}
 		return lizards;
 	}
 
@@ -188,7 +188,15 @@ public class LizardGame {
 	 * @param height number of rows of the resized grid
 	 */
 	public void resetGrid(int width, int height) {
-		// TODO: method stub
+		this.width = width;
+		this.height = height;
+		this.game = new Cell[height][width];
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				Cell cell = new Cell(i, j);
+				game[i][j] = cell;
+			}
+		}
 	}
 
 	/**
