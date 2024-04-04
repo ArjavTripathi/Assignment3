@@ -301,23 +301,41 @@ public class LizardGame {
 	 * @param dir the given direction to move the selected segment
 	 */
 	public void move(int col, int row, Direction dir) {
-		Cell cell = getAdjacentCell(col, row, dir);
+		try {
+			Cell cell = getAdjacentCell(col, row, dir);
 
-		if(isAvailable(cell.getCol(), cell.getRow())){
-			Lizard liz = getSpecificLizard(new Cell(col, row));
+			if (isAvailable(cell.getCol(), cell.getRow())) {
+				Lizard liz = getSpecificLizard(getCell(col, row));
+				ArrayList<BodySegment> newSegments = new ArrayList<>();
+				ArrayList<BodySegment> oldSegments = liz.getSegments();
+				boolean isHeadOrTail = getCell(col, row) == liz.getHeadSegment().getCell() || getCell(col, row) == liz.getTailSegment().getCell();
+				if (isHeadOrTail && cell.getExit() == null) {
+					if(getCell(col, row) == liz.getHeadSegment().getCell() && dir != liz.getDirectionToSegmentBehind(liz.getHeadSegment())){
+						oldSegments.getFirst().getCell().removeLizard();
+						for(int i = 1; i < oldSegments.size(); i++){
+							newSegments.add(oldSegments.get(i));
+						}
+						newSegments.add(new BodySegment(liz, cell));
+						liz.setSegments(newSegments);
+					} else if(getCell(col, row) == liz.getHeadSegment().getCell() && dir == liz.getDirectionToSegmentBehind(liz.getHeadSegment())){
+						for(int i = oldSegments.size()-2; i < oldSegments.size(); i++){
+							newSegments.add(oldSegments.get(i));
+						}
+					}
+
+				} else if(cell.getExit() != null){
+					removeLizard(liz);
+				}
+
 			}
+		} catch(NullPointerException e){
+			System.out.println("NullPointerException");
 		}
+	}
 
 
 	private Lizard getSpecificLizard(Cell cell) {
-		ArrayList<Lizard> lizards = getLizards();
-		for(Lizard l : lizards){
-			if(l.getSegmentAt(cell) != null){
-				return l;
-			} else {
-				return null;
-			}
-		}
+		return cell.getLizard();
 	}
 
 
