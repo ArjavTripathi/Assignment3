@@ -181,8 +181,34 @@ public class LizardGame {
 	 * @return the adjacent cell or null
 	 */
 	public Cell getAdjacentCell(int col, int row, Direction dir) {
-		// TODO: method stub
-		return null;
+		switch(dir) {
+			case LEFT:
+				try {
+					return getCell(col - 1, row);
+				} catch(Exception e){
+					return null;
+				}
+			case RIGHT:
+				try{
+					return getCell(col + 1, row);
+				} catch(Exception e){
+					return null;
+				}
+			case UP:
+				try{
+					return getCell(col, row - 1);
+				} catch(Exception e){
+					return null;
+				}
+			case DOWN:
+				try{
+					return getCell(col, row + 1);
+				} catch(Exception e){
+					return null;
+				}
+			default:
+				return null;
+		}
 	}
 
 	/**

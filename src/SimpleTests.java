@@ -105,7 +105,7 @@ public class SimpleTests {
 		liz = game.getLizards().get(0);
 		Cell adjCell = game.getAdjacentCell(1, 1, RIGHT);
 		System.out.println("Right of cell (1,1) is " + adjCell + ", expected cell (2,1,Ground,Empty)");
-		System.out.println("Cell (5,2) is available (" + game.getCell(5, 2) + "), expected true.");
+		System.out.println("Cell (5,2) is available (" + game.isAvailable(5, 2) + "), expected true.");
 		System.out.println("Moving head of lizard one RIGHT.");
 		game.move(4, 2, RIGHT);
 		System.out.println("Cell (5,2) is available (" + game.isAvailable(5, 2) + "), expected false.");
