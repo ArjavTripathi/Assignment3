@@ -304,12 +304,22 @@ public class LizardGame {
 		Cell cell = getAdjacentCell(col, row, dir);
 
 		if(isAvailable(cell.getCol(), cell.getRow())){
-			switch(dir){
-				case LEFT:
-					for(int i = 0; i < )
+			Lizard liz = getSpecificLizard(new Cell(col, row));
+			}
+		}
+
+
+	private Lizard getSpecificLizard(Cell cell) {
+		ArrayList<Lizard> lizards = getLizards();
+		for(Lizard l : lizards){
+			if(l.getSegmentAt(cell) != null){
+				return l;
+			} else {
+				return null;
 			}
 		}
 	}
+
 
 	/**
 	 * Sets callback listeners for game events.
