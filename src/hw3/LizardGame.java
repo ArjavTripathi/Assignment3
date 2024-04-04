@@ -160,10 +160,14 @@ public class LizardGame {
 	 * @return the cell or null
 	 */
 	public Cell getCell(int col, int row) {
-		if (col > width || row > height || col < 0 || height < 0) {
+		try {
+			if (col > width || row > height || col < 0 || height < 0) {
+				return null;
+			} else {
+				return game[col][row];
+			}
+		} catch(ArrayIndexOutOfBoundsException e){
 			return null;
-		} else {
-			return game[col][row];
 		}
 	}
 
