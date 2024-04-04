@@ -301,7 +301,14 @@ public class LizardGame {
 	 * @param dir the given direction to move the selected segment
 	 */
 	public void move(int col, int row, Direction dir) {
-		// TODO: method stub
+		Cell cell = getAdjacentCell(col, row, dir);
+
+		if(isAvailable(cell.getCol(), cell.getRow())){
+			switch(dir){
+				case LEFT:
+					for(int i = 0; i < )
+			}
+		}
 	}
 
 	/**
