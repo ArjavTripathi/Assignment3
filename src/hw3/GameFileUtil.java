@@ -95,8 +95,8 @@ public class GameFileUtil {
 
 
 	public static void main(String[] args) {
-		LizardGame game = new LizardGame(0, 0);
-		GameFileUtil.load("src/examples/game1.txt", game);
+//		LizardGame game = new LizardGame(0, 0);
+//		GameFileUtil.load("src/examples/game1.txt", game);
 	}
 
 }
