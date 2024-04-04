@@ -318,9 +318,16 @@ public class LizardGame {
 						newSegments.add(new BodySegment(liz, cell));
 						liz.setSegments(newSegments);
 					} else if(getCell(col, row) == liz.getHeadSegment().getCell() && dir == liz.getDirectionToSegmentBehind(liz.getHeadSegment())){
-						for(int i = oldSegments.size()-2; i < oldSegments.size(); i++){
-							newSegments.add(oldSegments.get(i));
+						int tailCol = liz.getTailSegment().getCell().getCol();
+						int tailRow = liz.getTailSegment().getCell().getCol();
+						Cell cell3 = getAdjacentCell(tailCol, tailRow, dir);
+						if(isAvailable(cell3.getCol(), cell3.getRow())){
+							for(int i = oldSegments.size()-2; i >=0; i--){
+								newSegments.add(oldSegments.get(i));
+							}
+
 						}
+
 					}
 
 				} else if(cell.getExit() != null){
