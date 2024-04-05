@@ -5,6 +5,7 @@ import static api.Direction.*;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import api.*;
 
@@ -302,38 +303,44 @@ public class LizardGame {
 	 */
 	public void move(int col, int row, Direction dir) {
 		try {
+			Lizard liz = getSpecificLizard(getCell(col, row));
 			Cell cell = getAdjacentCell(col, row, dir);
-
-			if (isAvailable(cell.getCol(), cell.getRow())) {
-				Lizard liz = getSpecificLizard(getCell(col, row));
-				ArrayList<BodySegment> newSegments = new ArrayList<>();
-				ArrayList<BodySegment> oldSegments = liz.getSegments();
-				boolean isHeadOrTail = getCell(col, row) == liz.getHeadSegment().getCell() || getCell(col, row) == liz.getTailSegment().getCell();
-				if (isHeadOrTail && cell.getExit() == null) {
-					if(getCell(col, row) == liz.getHeadSegment().getCell() && dir != liz.getDirectionToSegmentBehind(liz.getHeadSegment())){
+			Cell adjHeadCell = getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir);
+			ArrayList<BodySegment> newSegments = new ArrayList<>();
+			ArrayList<BodySegment> oldSegments = liz.getSegments();
+			boolean isHead = getCell(col, row) == liz.getHeadSegment().getCell();
+			boolean isTail = getCell(col, row) == liz.getTailSegment().getCell();
+			int newcol = getAdjacentCell(col, row, dir).getCol();
+			int newrow = getAdjacentCell(col, row, dir).getRow();
+			if (((isHead && dir != liz.getDirectionToSegmentBehind(liz.getHeadSegment()) || isAvailable(newcol, newrow)) || (isTail && dir != liz.getDirectionToSegmentAhead(liz.getTailSegment()) || isAvailable(newcol, newrow))) && cell.getExit() == null) {
+					if(isHead){
 						oldSegments.getFirst().getCell().removeLizard();
 						for(int i = 1; i < oldSegments.size(); i++){
 							newSegments.add(oldSegments.get(i));
 						}
 						newSegments.add(new BodySegment(liz, cell));
 						liz.setSegments(newSegments);
-					} else if(getCell(col, row) == liz.getHeadSegment().getCell() && dir == liz.getDirectionToSegmentBehind(liz.getHeadSegment())){
-						int tailCol = liz.getTailSegment().getCell().getCol();
-						int tailRow = liz.getTailSegment().getCell().getCol();
-						Cell cell3 = getAdjacentCell(tailCol, tailRow, dir);
-						if(isAvailable(cell3.getCol(), cell3.getRow())){
-							for(int i = oldSegments.size()-2; i >=0; i--){
-								newSegments.add(oldSegments.get(i));
-							}
-
+					} else if(isTail){
+						oldSegments.getLast().getCell().removeLizard();
+						for(int i = 0; i < oldSegments.size() - 1; i++){
+							newSegments.add(oldSegments.get(i));
 						}
-
+						newSegments.add(new BodySegment(liz, cell));
+						Collections.reverse(newSegments);
+						liz.setSegments(newSegments);
 					}
-
-				} else if(cell.getExit() != null){
-					removeLizard(liz);
+			} else if(isTail && dir == liz.getDirectionToSegmentAhead(liz.getTailSegment())){
+				oldSegments.getFirst().getCell().removeLizard();
+				oldSegments.remove(0);
+				for(int i = 0; i < oldSegments.size(); i++){
+					newSegments.add(oldSegments.get(i));
 				}
+				newSegments.add(new BodySegment(liz, getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir)));
+				liz.setSegments(newSegments);
+			}
 
+			else if(cell.getExit() != null){
+				removeLizard(liz);
 			}
 		} catch(NullPointerException e){
 			System.out.println("NullPointerException");
