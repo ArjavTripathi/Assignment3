@@ -305,7 +305,6 @@ public class LizardGame {
 		try {
 			Lizard liz = getSpecificLizard(getCell(col, row));
 			Cell cell = getAdjacentCell(col, row, dir);
-			Cell adjHeadCell = getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir);
 			ArrayList<BodySegment> newSegments = new ArrayList<>();
 			ArrayList<BodySegment> oldSegments = liz.getSegments();
 			boolean isHead = getCell(col, row) == liz.getHeadSegment().getCell();
@@ -318,15 +317,17 @@ public class LizardGame {
 						for(int i = 1; i < oldSegments.size(); i++){
 							newSegments.add(oldSegments.get(i));
 						}
-						newSegments.add(new BodySegment(liz, cell));
+						Cell cellH = getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir);
+						newSegments.add(new BodySegment(liz, cellH));
 						liz.setSegments(newSegments);
 					} else if(isTail){
 						oldSegments.getLast().getCell().removeLizard();
 						for(int i = 0; i < oldSegments.size() - 1; i++){
 							newSegments.add(oldSegments.get(i));
 						}
-						newSegments.add(new BodySegment(liz, cell));
-						Collections.reverse(newSegments);
+						Cell cellT = getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), dir);
+						newSegments.add(0, new BodySegment(liz, cellT));
+						//Collections.reverse(newSegments);
 						liz.setSegments(newSegments);
 					}
 			} else if(isTail && dir == liz.getDirectionToSegmentAhead(liz.getTailSegment()) && cell.getExit() == null){
