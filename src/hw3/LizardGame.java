@@ -329,7 +329,7 @@ public class LizardGame {
 						Collections.reverse(newSegments);
 						liz.setSegments(newSegments);
 					}
-			} else if(isTail && dir == liz.getDirectionToSegmentAhead(liz.getTailSegment())){
+			} else if(isTail && dir == liz.getDirectionToSegmentAhead(liz.getTailSegment()) && cell.getExit() == null){
 				oldSegments.getFirst().getCell().removeLizard();
 				oldSegments.remove(0);
 				for(int i = 0; i < oldSegments.size(); i++){
@@ -337,9 +337,15 @@ public class LizardGame {
 				}
 				newSegments.add(new BodySegment(liz, getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir)));
 				liz.setSegments(newSegments);
-			}
-
-			else if(cell.getExit() != null){
+			} else if(isHead && dir == liz.getDirectionToSegmentBehind(liz.getHeadSegment()) && cell.getExit() == null){
+				oldSegments.getLast().getCell().removeLizard();
+				for(int i = oldSegments.size() - 1; i >= 0; i--){
+					newSegments.add(oldSegments.get(i));
+				}
+				newSegments.add(new BodySegment(liz,getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), dir)));
+				Collections.reverse(newSegments);
+				liz.setSegments(newSegments);
+			} else if(cell.getExit() != null){
 				removeLizard(liz);
 			}
 		} catch(NullPointerException e){
