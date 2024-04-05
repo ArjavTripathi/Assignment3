@@ -96,9 +96,9 @@ public class LizardGame {
 	 */
 	public ArrayList<Lizard> getLizards() {
 		ArrayList<Lizard> lizards= new ArrayList<>();
-		for(int i = 0; i < width; i++){
-			for(int j = 0; j < height; j++){
-				Cell cell = getCell(i, j);
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				Cell cell = getCell(j, i);
 				Lizard liz = cell.getLizard();
 				if(liz != null && !lizards.contains(liz)){
 					lizards.add(liz);
@@ -312,24 +312,24 @@ public class LizardGame {
 			int newcol = getAdjacentCell(col, row, dir).getCol();
 			int newrow = getAdjacentCell(col, row, dir).getRow();
 			if (((isHead && dir != liz.getDirectionToSegmentBehind(liz.getHeadSegment()) || isAvailable(newcol, newrow)) || (isTail && dir != liz.getDirectionToSegmentAhead(liz.getTailSegment()) || isAvailable(newcol, newrow))) && cell.getExit() == null) {
-					if(isHead){
-						oldSegments.getFirst().getCell().removeLizard();
-						for(int i = 1; i < oldSegments.size(); i++){
-							newSegments.add(oldSegments.get(i));
-						}
-						Cell cellH = getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir);
-						newSegments.add(new BodySegment(liz, cellH));
-						liz.setSegments(newSegments);
-					} else if(isTail){
-						oldSegments.getLast().getCell().removeLizard();
-						for(int i = 0; i < oldSegments.size() - 1; i++){
-							newSegments.add(oldSegments.get(i));
-						}
-						Cell cellT = getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), dir);
-						newSegments.add(0, new BodySegment(liz, cellT));
-						//Collections.reverse(newSegments);
-						liz.setSegments(newSegments);
+				if(isHead){
+					oldSegments.getFirst().getCell().removeLizard();
+					for(int i = 1; i < oldSegments.size(); i++){
+						newSegments.add(oldSegments.get(i));
 					}
+					Cell cellH = getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), dir);
+					newSegments.add(new BodySegment(liz, cellH));
+					liz.setSegments(newSegments);
+				} else if(isTail){
+					oldSegments.getLast().getCell().removeLizard();
+					for(int i = 0; i < oldSegments.size() - 1; i++){
+						newSegments.add(oldSegments.get(i));
+					}
+					Cell cellT = getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), dir);
+					newSegments.add(0, new BodySegment(liz, cellT));
+					//Collections.reverse(newSegments);
+					liz.setSegments(newSegments);
+				}
 			} else if(isTail && dir == liz.getDirectionToSegmentAhead(liz.getTailSegment()) && cell.getExit() == null){
 				oldSegments.getFirst().getCell().removeLizard();
 				oldSegments.remove(0);
@@ -346,12 +346,36 @@ public class LizardGame {
 				newSegments.add(new BodySegment(liz,getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), dir)));
 				Collections.reverse(newSegments);
 				liz.setSegments(newSegments);
-			} else if(cell.getExit() != null){
+			} else if(!isTail && !isHead && cell.getExit() == null){
+				BodySegment current = liz.getSegmentAt(getCell(col, row));
+				if(dir == liz.getDirectionToSegmentAhead(current)){
+					oldSegments.getFirst().getCell().removeLizard();
+					for(int i = 1; i < oldSegments.size(); i++){
+						newSegments.add(oldSegments.get(i));
+					}
+					newSegments.add(new BodySegment(liz, getAdjacentCell(liz.getHeadSegment().getCell().getCol(), liz.getHeadSegment().getCell().getRow(), liz.getHeadDirection())));
+					liz.setSegments(newSegments);
+				} else if(dir == liz.getDirectionToSegmentBehind(current)){
+					oldSegments.getLast().getCell().removeLizard();
+					for(int i = 0; i < oldSegments.size() - 1; i++){
+						newSegments.add(oldSegments.get(i));
+					}
+					newSegments.add(0, new BodySegment(liz, getAdjacentCell(liz.getTailSegment().getCell().getCol(), liz.getTailSegment().getCell().getRow(), liz.getTailDirection())));
+					liz.setSegments(newSegments);
+				}
+			}
+
+			else if(cell.getExit() != null){
 				removeLizard(liz);
+				if(getLizards().size() == 0){
+					dialogListener.showDialog("Game Over!");
+				}
+
 			}
 		} catch(NullPointerException e){
-			System.out.println("NullPointerException");
+			System.out.println("Null Pointer");
 		}
+
 	}
 
 
